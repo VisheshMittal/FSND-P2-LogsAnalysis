@@ -124,6 +124,7 @@ down_times = get_down_times()
 write_down_time_info(down_times)
 
 
+
 # create view authors_score as select articles.author as author_id, count(*) as views from articles left join log on concat('/article/', articles.slug)=log.path group by articles.author;
 # create view request_counts as select date_trunc('day', time) as date, count(*) as request_count from log group by date;
 # create view error_counts as select date_trunc('day', time) as date, count(*) as error_count from log where status not like '200%' group by date;
