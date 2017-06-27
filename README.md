@@ -29,16 +29,16 @@ The database includes three tables:
 - Log table
 
 In order to execute the program, you would need to create the following views:
-- authors_score:
+1.) authors_score:
 
 `create view authors_score as select articles.author as author_id, count(*) as views from articles left join log on concat('/article/', articles.slug)=log.path group by articles.author;`
-- request_counts:
+2.) request_counts:
 
 `create view request_counts as select date_trunc('day', time) as date, count(*) as request_count from log group by date;`
-- error_counts:
+3.) error_counts:
 
 `create view error_counts as select date_trunc('day', time) as date, count(*) as error_count from log where status not like '200%' group by date;`
-- error_rates:
+4.) error_rates:
 
 `create view error_rates as select to_char(request_counts.date, 'FMMonth FMDDth, YYYY') as date, round((error_counts.error_count * 100.0)/request_counts.request_count, 2) as error_rate from request_counts left join error_counts on request_counts.date=error_counts.date;`
 
